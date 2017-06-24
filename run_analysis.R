@@ -11,22 +11,22 @@
 # - 5. Tyding dataset
 # - 6. Saving and cleaning workspace
 # The itens from 1 to 5 correspond each to a requirement from the assignment.
-# From more information on how each of the steps fulfills the requirements 
+# For more information on how each of the steps fulfills the requirements 
 # please consult the README.md file.
 
 ### 0. Preparation and importing data
 ## Loading packages
-library(plyr)
 library(dplyr)
 library(tidyr)
 
 ## Downloading and extracting the dataset (if necessary)
+if(!dir.exists("./Data")) {dir.create("./Data")}
 dataName <- "./Data/samsung.zip"
 if(!dir.exists("./Data/UCI HAR Dataset")) {
       if(!file.exists(dataName)) {
             # Defining file URL
-            fileUrl <- paste("https://d396qusza40orc.cloudfront.net", 
-                             "/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip",
+            fileUrl <- paste("https://d396qusza40orc.cloudfront.net/", 
+                             "getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip",
                              sep = "")
             # Downloading in temporary file
             download.file(fileUrl, dataName)
