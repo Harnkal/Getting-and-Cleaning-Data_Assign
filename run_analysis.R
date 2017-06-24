@@ -46,10 +46,8 @@ act_labels <- read.table("./Data/UCI HAR Dataset/activity_labels.txt")
 
 ## 1. Merging Data Sets
 # Merging labels and data and creating a column to identify the data type
-trainData <- mutate(trainData, activity = trainLabels$V1, 
-                    datatype = "train")
-testData <- mutate(testData, activity = testLabels$V1, 
-                   datatype = "test")
+trainData <- mutate(trainData, activity = trainLabels$V1, datatype = "train")
+testData <- mutate(testData, activity = testLabels$V1, datatype = "test")
 # Merging the train and test datasets
 totalData <- bind_rows(trainData, testData)
 
