@@ -88,7 +88,7 @@ tidyData <- tidyData %>%
 # as a variable, this dataset has 2 kinds of data, axial and angular, and the 
 # second type doesn't have axial information (as it doesn't exist), so, trying 
 # to create a variable for each axis would insert NAs in the dataset. In my 
-# opinion, the correct call here would be split this data into 2 separte tables 
+# opinion, the correct call here would be split this data into 2 separate tables 
 # and then tidy them both. However, doing this would be against the requirements 
 # of the assignment.
 

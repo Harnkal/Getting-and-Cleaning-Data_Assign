@@ -58,7 +58,7 @@ I did not include the meanFreq() variables as, in my understanding of the datase
 Naming activity labels
 ----------------------
 
-There are many ways to accomplish this objective. The strategy I used was defining the activity variable as a vector and then changing the levels based on the data on the activity_labels.txt file:
+There are many ways to accomplish this objective. The strategy I used was defining the activity variable as a factor and then changing the levels based on the data on the activity_labels.txt file:
 ```R
 selectedData <- mutate(selectedData, activity = as.factor(activity))
 levels(selectedData$activity) <- act_labels$V2
@@ -67,16 +67,44 @@ levels(selectedData$activity) <- act_labels$V2
 Naming variables
 ----------------
 
-In this part, the code uses the variable names in the file features.txt to names all the variables gathed in the Selecting data section. The only change made to the names contained in the features.txt file was the removal of the "()" from the end of the part that indicates the applied operations.
+In this part, the code uses the variable names in the file features.txt to names all the variables gathared in the Selecting data section. The only change made to the names contained in the features.txt file was the removal of the "()" from the end of the part that indicates the applied operations.
 ```R
 varNames <- as.character(features$V2[interestVars])
 varNames <- gsub("\\()", "", varNames)
 names(selectedData)[3:length(selectedData)] <- varNames
 ```
 
-Some could say that it is possible to be more descriptive in the variable names. However, the names as they are in the features.txt file serves my well as they show the subject, the applied operation to the raw data and the axis (when they exist), and as I do not have a full undertanding on the measured subjects it is unlikely that I would be able to give them names that describe them better. Besides that, the names are well formated and these variables will be stored as observations in the further steps of the analysis which will serve me well.
+Some could say that it is possible to be more descriptive in the variable names. However, the names as they are in the features.txt file serves me well as they show the subject, the applied operation to the raw data and the axis (when they exist), and as I do not have a full undertanding on the measured subjects it is unlikely that I would be able to give them names that describe them better. Besides that, the names are well formated and these variables will be stored as observations in the further steps of the analysis.
 
+Tidying dataset
+---------------
 
+This is the part of the assignment that is more open for discussions, this is because a tidy dataset is not the same for everybody and it varies acording to it's application. As this dataset will not have any application at all (at least not on this course) the tidy format is up to the previous experiences (or even lack of it) of the future (or current) scientist. So, this section tries to explain why this dataset is tidy for me and how tidyied it.
+
+In the first part of this section the code put the dataset created until now through a pipe which gather all the columns of the data set but the datatype and the activity and stores them as observations under the variable subject, then it group this data by activity and subject and summirizes their values by mean storing the results in a variable called mean. The result of this pipe is then stored in a new dataset called tidyData.
+```R
+tidyData <- selectedData %>% 
+      gather(subject, values, -c(datatype, activity)) %>%
+      group_by(activity, subject) %>%
+      summarize(mean = mean(values))
+```
+
+Here is were the discutions begin. The dataset creted until now is arguably tidy and some would even say that it is not necessary to gather the variables into observations (see [Getting and Cleaning the Assignment](https://thoughtfulbloke.wordpress.com/2015/09/09/getting-and-cleaning-the-assignment/) article). However, there are two kinds of measurements for each activity and subject and, in my see, they should be split in 2 variables as they measure different things (mean and standard deviation). The following part of the code takes care of the (if you included the meanFreq() variables in the Selecting data section, running this part of the code may generate some NAs).
+```R
+tidyData <- tidyData %>%
+      separate(subject, c("subject", "variables", "axis"), fill = "right") %>%
+      mutate(subject = paste(subject, axis, sep = "-"), 
+             subject = gsub("-NA$", "", subject)) %>%
+      select(-axis) %>%
+      spread(variables, mean)
+```
+
+As you could see above I separated the subject from the axis, but I had to put paste them back together. Although some could say that each axis should stored as a variable, this dataset has 2 kinds of data, axial and angular, and the second type doesn't have axial information (as it doesn't exist), so, trying to create a variable for each axis would insert NAs in the dataset. In my opinion, the correct call here would be split this data into 2 separate tables and then tidy them both. However, doing this would be against the requirements of the assignment.
+
+Saving and cleaning workspace
+-----------------------------
+
+Finaly the new tidy dataset is saved in the same folder as the raw data (```"./Data"```) and all the variables created during the this scrip were erased in order to return your workspace to the inital state.
 
 
 
