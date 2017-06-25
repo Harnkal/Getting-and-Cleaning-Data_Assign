@@ -89,7 +89,7 @@ tidyData <- selectedData %>%
       summarize(mean = mean(values))
 ```
 
-Here is were the discutions begin. The dataset creted until now is arguably tidy and some would even say that it is not necessary to gather the variables into observations (see [Getting and Cleaning the Assignment](https://thoughtfulbloke.wordpress.com/2015/09/09/getting-and-cleaning-the-assignment/) article). However, there are two kinds of measurements for each activity and subject and, in my see, they should be split in 2 variables as they measure different things (mean and standard deviation). The following part of the code takes care of the (if you included the meanFreq() variables in the Selecting data section, running this part of the code may generate some NAs).
+Here is were the discutions begin. The dataset creted until now is arguably tidy and some would even say that it is not necessary to gather the variables into observations (see [Getting and Cleaning the Assignment](https://thoughtfulbloke.wordpress.com/2015/09/09/getting-and-cleaning-the-assignment/) article). However, there are two kinds of measurements for each activity and subject and, in my see, they should be split in 2 variables as they measure different things (mean and standard deviation). The following part of the code takes care of that (if you included the meanFreq() variables in the Selecting data section, running this part of the code may generate some NAs).
 ```R
 tidyData <- tidyData %>%
       separate(subject, c("subject", "variables", "axis"), fill = "right") %>%
@@ -99,7 +99,7 @@ tidyData <- tidyData %>%
       spread(variables, mean)
 ```
 
-As you could see above I separated the subject from the axis, but I had to put paste them back together. Although some could say that each axis should stored as a variable, this dataset has 2 kinds of data, axial and angular, and the second type doesn't have axial information (as it doesn't exist), so, trying to create a variable for each axis would insert NAs in the dataset. In my opinion, the correct call here would be split this data into 2 separate tables and then tidy them both. However, doing this would be against the requirements of the assignment.
+As you could see above I separated the subject from the axis, but I had to paste them back together. Although some could say that each axis should stored as a variable, this dataset has 2 kinds of data, axial and angular, and the second type doesn't have axial information (as it doesn't exist), so, trying to create a variable for each axis would insert NAs in the dataset. In my opinion, the correct call here would be split this data into 2 separate tables and then tidy them both. However, doing this would be against the requirements of the assignment.
 
 Saving and cleaning workspace
 -----------------------------
