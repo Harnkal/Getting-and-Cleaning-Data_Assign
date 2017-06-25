@@ -4,7 +4,7 @@ Getting-and-Cleaning-Data_Assign
 Introduction
 ------------
 
-This README was created in order to explain how the code on the file run_analysis.R works, and how the output of this code is tidy. It was divided into 8 items in order to make it easier for whoever is grading this assignment:
+This README was created in order to explain how the code on the file run_analysis.R works, and how the output of this code is tidy. It was divided into 8 items in order to make it easier to whoever is grading this assignment:
 
 0. Preparation and importing data
 1. Merging data
@@ -28,7 +28,7 @@ Preparation
 
 In this section, the code will check if the raw dataset have already been downloaded and unziped in the correct path. In case you have not downloaded the raw dataset or not placed it properly according to the instructions above, it will download and unzip the raw dataset in the path it was programed to look for (it is important to follow this part of the instructions in case you don't want to download multiple copies of the dataset).
 
-Also in this item, the code will load the used packages and import the used data from raw dataset folder.
+Also in this item, the code will load the used packages and import the used data from the raw dataset folder.
 
 Merging data
 ---------------
@@ -47,13 +47,13 @@ totalData <- bind_rows(trainData, testData)
 Selecting data
 --------------
 
-As the assignment requested the code should extract only the measurements for the mean and the standard deviation for each measurement. The strategy used to accomplish this was searching for the terms ```"mean()"``` and ```"std()"``` in the features dataset which contains the names of all the variables, and using it to select the variables returned by the search. The order of the columns were also changed for better visualization.
+As the assignment requested, the code should extract only the measurements for the mean and the standard deviation for each measurement. The strategy used to accomplish this was searching for the terms ```"mean()"``` and ```"std()"``` in the features dataset which contains the names of all the variables, and using it to select the variables returned by the search. The order of the columns were also changed for better visualization.
 ```R
 interestVars <- grepl("mean\\()|std\\()", features$V2)
 selectedData <- select(totalData, 563, 562, which(interestVars))
 ``` 
 
-I did not include the meanFreq() variables as, in my understanding of the dataset, this variable does not show the mean of the refered measurement, it rather shows the mean frequency of aquisition which was not requested in the assignment. I understand that some people may disagree on that understanding and in this case to include meanFreq, substitute "mean\\()" by "mean.*\\()" (this may generate some NAs in the final step of the Tidying dataset item, so you may want also to remove the section were it separates the means and the standard deviations into 2 variables).
+I did not include the meanFreq() variables as, in my understanding of the dataset, this variable does not show the mean of the refered measurement, it rather shows the mean frequency of aquisition which was not requested in the assignment. I understand that some people may disagree on that understanding and in this case to include meanFreq, substitute "mean\\()" by "mean.*\\()" (this may generate some NAs in the final step of the Tidying dataset item, so you may want also to remove the section were it spreads the means and the standard deviations into 2 variables).
 
 Naming activity labels
 ----------------------
@@ -67,7 +67,7 @@ levels(selectedData$activity) <- act_labels$V2
 Naming variables
 ----------------
 
-In this part, the code uses the variable names in the file features.txt to names all the variables gathared in the Selecting data section. The only change made to the names contained in the features.txt file was the removal of the "()" from the end of the part that indicates the applied operations.
+In this part, the code uses the variable names in the file features.txt to name all the variables gathared in the Selecting data section. The only change made to the names contained in the features.txt file was the removal of the "()" from the end of the part that indicates the applied operations.
 ```R
 varNames <- as.character(features$V2[interestVars])
 varNames <- gsub("\\()", "", varNames)
@@ -79,7 +79,7 @@ Some could say that it is possible to be more descriptive in the variable names.
 Tidying dataset
 ---------------
 
-This is the part of the assignment that is more open for discussions, this is because a tidy dataset is not the same for everybody and it varies acording to it's application. As this dataset will not have any application at all (at least not on this course) the tidy format is up to the previous experiences (or even lack of it) of the future (or current) scientist. So, this section tries to explain why this dataset is tidy for me and how tidyied it.
+This is the part of the assignment that is more open for discussions. This is because a tidy dataset is not the same for everybody and it varies acording to it's application and as this dataset will not have any application at all (at least not on this course) the tidy format is up to the previous experiences (or even lack of it) of the future (or current) scientist. So, this section tries to explain why this dataset is tidy for me and how I tidyied it.
 
 In the first part of this section the code put the dataset created until now through a pipe which gather all the columns of the data set but the datatype and the activity and stores them as observations under the variable subject, then it group this data by activity and subject and summirizes their values by mean storing the results in a variable called mean. The result of this pipe is then stored in a new dataset called tidyData.
 ```R
@@ -104,7 +104,7 @@ As you could see above I separated the subject from the axis, but I had to put p
 Saving and cleaning workspace
 -----------------------------
 
-Finaly the new tidy dataset is saved in the same folder as the raw data (```"./Data"```) and all the variables created during the this scrip were erased in order to return your workspace to the inital state.
+Finaly the new tidy dataset is saved in the same folder as the raw data (```"./Data"```) as (```"samsung_tidy.txt"```) and all the variables created during the this scrip were erased in order to return your workspace to the inital state.
 
 
 
