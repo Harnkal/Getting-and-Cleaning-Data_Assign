@@ -1,13 +1,13 @@
 Getting and Cleaning Data Assignment - Code Book
 ------------------------------------------------
 
-1. samsung_tidy
+* samsung_tidy  
 	This data set was generated from the Samsung [Human Activity Recognition Using Smart Phones Data Set] (http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones). To generate this data set, all the values for the mean and stardard deviation for each subject where merged along with the activities that were being executed in the moment, and then the mean values for the mean and standard deviation for each combination between activities and subjects. The data set contains 4 variables as follows:
 	
-	1. activity
-		Variable that indicates the activity that was being executed at the moment of the acquisition
-		Class: Factor
-		Levels: 6
+	1. activity  
+		Variable that indicates the activity that was being executed at the moment of the acquisition  
+		Class: Factor  
+		Levels: 6  
 		1. WALKING
 		2. WALKING_UPSTAIRS
 		3. WALKING_DOWNSTAIRS
@@ -15,11 +15,11 @@ Getting and Cleaning Data Assignment - Code Book
 		5. STANDING
 		6. LAYING
 		
-	2. subject
-		The subjects selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
-		Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
-		Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals).
-		Class: Character
+	2. subject  
+		The subjects selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz.  
+		Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag).  
+		Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals).  
+		Class: Character  
 		1. fBodyAcc-X
 		2. fBodyAcc-Y
 		3. fBodyAcc-Z
@@ -54,10 +54,10 @@ Getting and Cleaning Data Assignment - Code Book
 		32. tGravityAcc-Z
         33. tGravityAccMag
 		
-	3. mean
-		This variable presents the mean value for each combination of activity and subject.
+	3. mean  
+		This variable presents the mean value for each combination of activity and subject.  
 		Class: numeric
 		
-	4. std
-		This variablepresents the mean standard deviation of the measurements for each combination of activity and subject.
+	4. std  
+		This variablepresents the mean standard deviation of the measurements for each combination of activity and subject.  
 		Class: numeric 
