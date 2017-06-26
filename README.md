@@ -4,7 +4,7 @@ Getting-and-Cleaning-Data_Assign
 Introduction
 ------------
 
-This README was created in order to explain how the code on the file run_analysis.R works, and how the output of this code is tidy. It was divided into 8 items in order to make it easier to whoever is grading this assignment:
+This README was created in order to explain how the code on the file run_analysis.R works, and how the output of this code is tidy. It was divided into 7 items in order to make it easier to whoever is grading this assignment:
 
 0. Preparation and importing data
 1. Merging data
