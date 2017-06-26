@@ -93,7 +93,7 @@ tidyData <- tidyData %>%
 # of the assignment.
 
 ## 6. Saving dataset and cleaning workspace
-write.table(tidyData, file = "./Data/samsung_tidy.txt")
+write.table(tidyData, file = "./Data/samsung_tidy.txt", row.names = FALSE)
 rm(act_labels, features, selectedData, testData, testLabels, totalData, 
    trainData, trainLabels, dataName, interestVars, varNames, tidyData)
 
