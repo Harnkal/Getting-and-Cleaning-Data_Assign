@@ -38,16 +38,18 @@ library(tidyr)
 
 # Importing data
 trainData <- read.table("./Data/UCI HAR Dataset/train/X_train.txt")
-trainLabels <- read.table("./Data/UCI HAR Dataset/train/y_train.txt")
+trainActivity <- read.table("./Data/UCI HAR Dataset/train/y_train.txt")
+trainSubject <- read.table("./Data/UCI HAR Dataset/train/subject_train.txt")
 testData <- read.table("./Data/UCI HAR Dataset/test/X_test.txt")
-testLabels <- read.table("./Data/UCI HAR Dataset/test/y_test.txt")
+testActivity <- read.table("./Data/UCI HAR Dataset/test/y_test.txt")
+testSubject <- read.table("./Data/UCI HAR Dataset/test/subject_test.txt")
 features <- read.table("./Data/UCI HAR Dataset/features.txt")
 act_labels <- read.table("./Data/UCI HAR Dataset/activity_labels.txt")
 
 ## 1. Merging Data Sets
-# Merging labels and data and creating a column to identify the data type
-trainData <- mutate(trainData, activity = trainLabels$V1, datatype = "train")
-testData <- mutate(testData, activity = testLabels$V1, datatype = "test")
+# Merging activities, subjects and data
+trainData <- bind_cols(trainData, trainActivity, trainSubject)
+testData <- bind_cols(testData, testActivity, testSubject)
 # Merging the train and test datasets
 totalData <- bind_rows(trainData, testData)
 
@@ -57,7 +59,8 @@ totalData <- bind_rows(trainData, testData)
 # the mean frequency of aquisition which was not requested in the assignment. 
 # To include meanFreq, substitute "mean\\()" by "mean.*\\()"
 interestVars <- grepl("mean\\()|std\\()", features$V2)
-selectedData <- select(totalData, 563, 562, which(interestVars))
+selectedData <- totalData %>%
+      select(subject = 563, activity = 562, which(interestVars))
 
 ## 3. Naming activity labels
 selectedData <- mutate(selectedData, activity = as.factor(activity))
@@ -70,20 +73,20 @@ names(selectedData)[3:length(selectedData)] <- varNames
 
 ## 5. Tidying dataset and gathering means
 tidyData <- selectedData %>% 
-      gather(subject, values, -c(datatype, activity)) %>%
-      group_by(activity, subject) %>%
+      gather(feature, values, -c(subject, activity)) %>%
+      group_by(subject, activity, feature) %>%
       summarize(mean = mean(values))
 # The dataset creted until now is arguably tidy, however, there are two kinds 
-# of measurements for each activity and subject and, in my see, they should be 
+# of measurements for each activity, subject and feature and, in my see, they should be 
 # split in 2 variables as they measure different things (mean and standard
 # deviation).
 tidyData <- tidyData %>%
-      separate(subject, c("subject", "variables", "axis"), fill = "right") %>%
-      mutate(subject = paste(subject, axis, sep = "-"), 
-             subject = gsub("-NA$", "", subject)) %>%
+      separate(feature, c("feature", "variables", "axis"), fill = "right") %>%
+      mutate(feature = paste(feature, axis, sep = "-"), 
+             feature = gsub("-NA$", "", feature)) %>%
       select(-axis) %>%
       spread(variables, mean)
-# As you could see above I separated the subject from the axis, but I had to put
+# As you could see above I separated the features from the axis, but I had to put
 # paste them back together. Although some could say that each axis should stored
 # as a variable, this dataset has 2 kinds of data, axial and angular, and the 
 # second type doesn't have axial information (as it doesn't exist), so, trying 
@@ -94,6 +97,7 @@ tidyData <- tidyData %>%
 
 ## 6. Saving dataset and cleaning workspace
 write.table(tidyData, file = "./Data/samsung_tidy.txt", row.names = FALSE)
-rm(act_labels, features, selectedData, testData, testLabels, totalData, 
-   trainData, trainLabels, dataName, interestVars, varNames, tidyData)
+rm(act_labels, features, selectedData, testData, testActivity, testSubject, 
+   totalData, trainData, trainActivity, trainSubject, dataName, interestVars, 
+   varNames, tidyData)
 
